@@ -30,6 +30,11 @@ app.get('/', async (requisicao, response) => {
   )
 })
 
+app.get('/json', async (requisicao, response) => {
+  const users = await prisma.User.findMany()
+  response.status(200).json(users)
+})
+
 app.post('/CreateItem', async (requisicao, response) => {
   const { nome, idade } = requisicao.body;
   if (!nome) {
@@ -56,7 +61,3 @@ app.post('/CreateItem', async (requisicao, response) => {
 app.listen(port, () => {
   console.log("Rodando na porta: " + port)
 })
-
-
-
-

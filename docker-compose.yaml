@@ -39,12 +39,12 @@ services:
       image: matheushenrique35/nginx-proxy-node
       container_name: nginxproxy
       networks:
-      - proxyreverso
+        - proxyreverso
       ports:
-      - "8089:80"
+        - "8089:80"
       depends_on:
-      - mysql
-      - node
+        - mysql
+        - node
 
 networks:
   proxyreverso:
