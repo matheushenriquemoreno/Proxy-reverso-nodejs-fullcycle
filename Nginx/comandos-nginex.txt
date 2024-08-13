@@ -1,0 +1,8 @@
+-- Criando container do nginex
+docker run -it --name nginexproxy -p 8089:80 nginx bash
+
+-- build da imagem com a configuração que criei para realizar o proxy reverso
+docker build -t matheushenrique35/nginx-proxy-node .
+
+-- iniciando container
+docker run -it --rm --name nginexproxy -p 8089:80 --network proxyreverso  matheushenrique35/nginx-proxy-node

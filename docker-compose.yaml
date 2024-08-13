@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    command: --innodb-use-native-aio=0
+    container_name: mysqldb
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - proxyreverso
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  node:
+    build:
+      context: .
+    image: nodeapi
+    container_name: nodeserver
+    command: bash -c " npx prisma migrate deploy && npm run start "
+    tty: true
+    networks:
+      - proxyreverso
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+      build:
+        context: ./Nginx
+        dockerfile: Dockerfile
+      image: matheushenrique35/nginx-proxy-node
+      container_name: nginxproxy
+      networks:
+      - proxyreverso
+      ports:
+      - "8089:80"
+      depends_on:
+      - mysql
+      - node
+
+networks:
+  proxyreverso:
+    driver: bridge

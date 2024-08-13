@@ -1,0 +1,59 @@
+--  Criando network para conectar todos os containers
+docker network create proxyreverso
+
+-- Inspecionando network
+docker network inspect proxyreverso
+
+-- criando container docker e mapeando para o meu local para realizar o desenvolvimento
+docker run --rm -it --name nodeserver -v ${PWD}/:/usr/src/app --network proxyreverso -p 3010:3000 node bash
+
+docker run --rm -it --name nodeserver -v ${PWD}/:/usr/src/app --network proxyreverso node bash
+
+
+-- criando container do mysql
+docker run -d -it --name mysqldb -v ${PWD}/mysql/:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=nodedb --network proxyreverso mysql
+
+
+-- rodar o nodemon via docker
+npm install nodemon -g
+nodemon -L index.js 
+
+
+
+
+docker-compose up -d --build
+
+
+
+docker build -t matheushenrique35/ngin-node .
+
+
+docker run --rm -it --name nodeserver2 -v ${PWD}:/usr/src/app --network proxyreverso -p 3010:3000 matheushenrique35/ngin-node
+
+
+
+
+
+
+
+
+
+
+-- montagem da imagen
+
+
+npm install prisma
+
+npm i -g npm
+npm install prisma
+npx prisma db pull
+
+
+
+
+
+
+
+
+
+docker run -it --name testecontainer -p 3000:3000 --network proxyreverso matheushenrique35/node-prisma
