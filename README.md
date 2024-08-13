@@ -1,5 +1,10 @@
-# Repositorio para configuração do desafio de criar um proxy reveso, entre uma aplicação node junto com o Ngix, e também criar a conexão com banco de dados.
+## Repositorio para configuração do desafio de criar um proxy reveso, entre uma aplicação node.js em conjunto ao Nginx, e também criar um banco de dados e realizar cadastro e busca de dados.
 
+### Conteudo aprendido
+- Funcionamento de um proxy reverso;
+- Criação e configuração de images Docker;
+- Criação de um docker compose complexo, com varios estagios e implementando dependencia entre container, e utilização de networks;
+- Node.js junto com a ORM Prisma, além de aplicar migrations ao iniciar o container;
 
 ## Build do projeto
 
