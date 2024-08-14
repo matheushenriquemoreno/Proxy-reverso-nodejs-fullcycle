@@ -22,9 +22,12 @@ services:
   node:
     build:
       context: .
+      dockerfile: Dockerfile.dev
     image: nodeapi
     container_name: nodeserver
-    command: bash -c " npx prisma migrate deploy && npm run start "
+    command: bash -c "npm i && npx prisma generate && npx prisma migrate deploy && npm run start"
+    volumes:
+      - .:/usr/src/app
     tty: true
     networks:
       - proxyreverso

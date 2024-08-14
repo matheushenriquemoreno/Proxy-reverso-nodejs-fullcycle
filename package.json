@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "prisma": {
-    "schema": "prisma/schema.prisma"
+    "schema": "src/prisma/schema.prisma"
   },
   "author": "",
   "license": "ISC",
