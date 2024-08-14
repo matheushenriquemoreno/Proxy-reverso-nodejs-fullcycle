@@ -57,3 +57,5 @@ npx prisma db pull
 
 
 docker run -it --name testecontainer -p 3000:3000 --network proxyreverso matheushenrique35/node-prisma
+
+

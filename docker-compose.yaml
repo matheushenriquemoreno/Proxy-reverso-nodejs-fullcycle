@@ -8,7 +8,7 @@ services:
     container_name: mysqldb
     tty: true
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysqlvolume:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
@@ -16,8 +16,9 @@ services:
       - proxyreverso
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+      interval: 5s
+      timeout: 10s
+      retries: 4
 
   node:
     build:
@@ -25,7 +26,8 @@ services:
       dockerfile: Dockerfile.dev
     image: nodeapi
     container_name: nodeserver
-    command: bash -c "npm i && npx prisma generate && npx prisma migrate deploy && npm run start"
+    entrypoint: sh -c "npm install && npx prisma generate && npx prisma migrate deploy && npm run start"
+    #command: bash -c "npm install && npx prisma generate && npx prisma migrate deploy && npm run start"
     volumes:
       - .:/usr/src/app
     tty: true
@@ -52,3 +54,7 @@ services:
 networks:
   proxyreverso:
     driver: bridge
+
+volumes:
+  mysqlvolume:
+    driver: local

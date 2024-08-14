@@ -7,12 +7,16 @@ WORKDIR /usr/src/app
 COPY package.json .
 
 RUN npm i
+# RUN npm ci
 RUN npm install prisma
 RUN npm install @prisma/client -g
 
 COPY src/ .
 
 RUN npx prisma generate
+
+#apartir daqui a imagem pega o usuario node
+USER node
 
 EXPOSE 3000
 
